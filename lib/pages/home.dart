@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pulsetime/widgets/pagina_topo.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,29 +21,7 @@ class HomePage extends StatelessWidget {
           child: Column(
             children: [
               // logo com gradiente no fundo
-              Container(
-                width: double.infinity,
-                height: 370,
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [
-                      Color.fromRGBO(52, 245, 145, 1),
-                      Color.fromRGBO(84, 127, 255, 1),
-                      Color.fromRGBO(255, 255, 255, 1),
-                    ],
-                    begin: AlignmentGeometry.topCenter,
-                    end: AlignmentGeometry.bottomCenter,
-                  ),
-                ),
-                child: Image.asset('assets/images/logo.png')
-                    .animate()
-                    .slideY(
-                      duration: Duration(milliseconds: 900),
-                      begin: -0.5,
-                      curve: Curves.easeOut,
-                    )
-                    .fadeIn(duration: Duration(milliseconds: 1500)),
-              ),
+              PaginaTopo(height: 370),
 
               SizedBox(height: 10),
 
@@ -142,9 +121,11 @@ class HomePage extends StatelessWidget {
                     ),
                     alignment: AlignmentGeometry.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/cadastrar");
+                  },
                   icon: Image.asset(
-                    'assets/images/useradd.png',
+                    "assets/images/useradd.png",
                     width: 58,
                     height: 58,
                   ),
