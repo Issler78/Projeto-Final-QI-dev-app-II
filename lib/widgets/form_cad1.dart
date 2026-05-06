@@ -21,7 +21,13 @@ class _FormCad1State extends State<FormCad1>{
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _telController = TextEditingController();
   final TextEditingController _dataController = TextEditingController();
-  late String ?_valorS = "";
+  late String ?_valorS;
+
+  @override
+  void initState() {
+    _valorS = null;
+    super.initState();
+  }
 
   @override
   void dispose() {
@@ -103,7 +109,8 @@ class _FormCad1State extends State<FormCad1>{
           SelectInput(
             icon: "assets/images/Sample_User_Icon.png",
             placeholder: "Sexo", 
-            items: ["Masculino", "Feminino"], 
+            items: ["Masculino", "Feminino"],
+            value: _valorS, 
             funcao: (String ?value) {
               setState(() {
                 _valorS = value;
@@ -125,7 +132,7 @@ class _FormCad1State extends State<FormCad1>{
           // botao continuar
           BotaoContinuar(comIcone: true, texto: "Continuar", funcao: () {
             String nome = _nomeController.text.trim();
-            String email= _emailController.text.trim();
+            String email = _emailController.text.trim();
             String telefone = _telController.text.trim();
             String dataNasc = _dataController.text.trim();
             final sexo = _valorS == null || _valorS == "" ? null : _valorS!.trim();
@@ -143,6 +150,14 @@ class _FormCad1State extends State<FormCad1>{
             }
 
           })
+          .animate()
+          .slideY(
+            duration: Duration(milliseconds: 900),
+            begin: -0.5,
+            curve: Curves.easeOut,
+            delay: Duration(milliseconds: 1250),
+          )
+          .fadeIn(duration: Duration(milliseconds: 1500)),
         ],
       ),
     );

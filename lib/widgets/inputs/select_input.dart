@@ -5,9 +5,10 @@ class SelectInput extends StatefulWidget {
   final String icon;
   final String placeholder;
   final List<String> items;
+  final String ?value;
   final void Function(String ?valor) funcao;
 
-  const SelectInput({ super.key, required this.icon, required this.placeholder, required this.items, required this.funcao });
+  const SelectInput({ super.key, required this.icon, required this.placeholder, required this.items, required this.value, required this.funcao });
   
   @override
   State<StatefulWidget> createState() => _SelectInputState();
@@ -60,6 +61,7 @@ class _SelectInputState extends State<SelectInput> {
               }).toList(),
               onChanged: widget.funcao,
               isExpanded: true,
+              value: widget.value,
               underline: SizedBox(),
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(94, 94, 94, 1),
