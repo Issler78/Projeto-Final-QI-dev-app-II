@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/buttons/botao_perfil.dart';
 import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
-import 'package:pulsetime/widgets/form_cad.dart';
+import 'package:pulsetime/widgets/forms/form_cad.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
 
 class Cadastro extends StatelessWidget {

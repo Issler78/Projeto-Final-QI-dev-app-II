@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:pulsetime/pages/cadastro.dart';
 import 'package:pulsetime/pages/home.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:pulsetime/pages/login.dart';
 
 void main() {
   runApp(MyApp());
@@ -22,7 +23,8 @@ class MyApp extends StatelessWidget{
       initialRoute: "/",
       routes: {
         "/": (context) => HomePage(),
-        "/cadastrar": (context) => Cadastro()
+        "/cadastrar": (context) => Cadastro(),
+        "/login": (context) => Login()
       },
     );
   }

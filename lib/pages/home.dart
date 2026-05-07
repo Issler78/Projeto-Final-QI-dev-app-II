@@ -179,7 +179,9 @@ class HomePage extends StatelessWidget {
                     ),
                     alignment: AlignmentGeometry.center,
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    Navigator.pushNamed(context, "/login");
+                  },
                   icon: Image.asset(
                     'assets/images/userg.png',
                     width: 58,
