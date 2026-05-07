@@ -9,11 +9,13 @@ class HomePage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       // suporte para AppBar, body, etc
-      resizeToAvoidBottomInset:
-          false, // evitar que o teclado redimensione a tela
+      resizeToAvoidBottomInset: false, // evitar que o teclado redimensione a tela
       body: SingleChildScrollView(
         child: Container(
-          width: double.infinity, // 100%
+          width: double.infinity, 
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ),// 100%
           decoration: BoxDecoration(
             // para estilizar
             color: Colors.white,
