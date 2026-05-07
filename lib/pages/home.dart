@@ -81,7 +81,7 @@ class HomePage extends StatelessWidget {
 
               // botoes
 
-              // botao agendar consulta / cadastrar
+              // botao agendar consulta / cadastrar (MUDAR DEPOIS DE LOGADO!!!)
               Container(
                 decoration: BoxDecoration(
                   // decorando o botao
@@ -147,7 +147,7 @@ class HomePage extends StatelessWidget {
 
               SizedBox(height: 30),
 
-              // botao minhas consultas / entrar
+              // botao minhas consultas / entrar (MUDAR DEPOIS DE LOGADO!!!)
               Container(
                 decoration: BoxDecoration(
                   // decorando o botao

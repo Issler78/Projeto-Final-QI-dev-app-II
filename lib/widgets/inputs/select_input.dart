@@ -2,13 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class SelectInput extends StatefulWidget {
-  final String icon;
+  final String icone;
   final String placeholder;
   final List<String> items;
   final String ?value;
   final void Function(String ?valor) funcao;
 
-  const SelectInput({ super.key, required this.icon, required this.placeholder, required this.items, required this.value, required this.funcao });
+  const SelectInput({ super.key, required this.icone, required this.placeholder, required this.items, required this.value, required this.funcao });
   
   @override
   State<StatefulWidget> createState() => _SelectInputState();
@@ -46,7 +46,7 @@ class _SelectInputState extends State<SelectInput> {
               color: Color.fromRGBO(79, 97, 162, .15)
             ),
             child: Image.asset(
-              widget.icon,
+              widget.icone,
               width: 36,
               height: 36,
             ),

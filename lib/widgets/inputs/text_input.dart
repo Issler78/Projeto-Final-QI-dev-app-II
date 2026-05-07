@@ -3,19 +3,21 @@ import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 class TextInput extends StatelessWidget {
-  final String icon;
+  final String icone;
   final String placeholder;
   final TextInputType ?keyboardType;
   final TextInputFormatter ?mask;
   final TextEditingController controller;
+  final bool ?password;
   
   const TextInput({
     super.key, 
-    required this.icon, 
+    required this.icone, 
     required this.placeholder, 
     this.keyboardType = TextInputType.text,  
     this.mask,
-    required this.controller
+    required this.controller,
+    this.password = false
   });
 
   @override
@@ -46,7 +48,7 @@ class TextInput extends StatelessWidget {
               color: Color.fromRGBO(79, 97, 162, .15)
             ),
             child: Image.asset(
-              icon,
+              icone,
               width: 36,
               height: 36,
             ),
@@ -57,6 +59,7 @@ class TextInput extends StatelessWidget {
             child: TextField(
               controller: controller,
               keyboardType: keyboardType,
+              obscureText: password ?? false,
               inputFormatters: mask != null ? [mask!] : [], // verifica se mask é null, se nao for utiliza o mask recebido
               style: GoogleFonts.inter(
                 fontSize: 20
