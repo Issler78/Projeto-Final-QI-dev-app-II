@@ -34,6 +34,8 @@ dependencies:
   flutter_animate: ^4.5.2
   mask_text_input_formatter: ^2.9.0
   dropdown_button2: ^3.1.0
+  flutter_multi_formatter: ^2.13.10
+  decimal: ^3.2.4
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

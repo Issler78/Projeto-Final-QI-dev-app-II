@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:mask_text_input_formatter/mask_text_input_formatter.dart';
+import 'package:flutter_multi_formatter/flutter_multi_formatter.dart';
+import 'package:decimal/decimal.dart';
 import 'package:pulsetime/pages/cadastro.dart';
 import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/inputs/date_input.dart';
@@ -333,6 +335,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
   final locais = ["Clínica 1", "Clínica 2", "Clínica 3"];
 
   final TextEditingController _conselhoController = TextEditingController();
+  final TextEditingController _valorConsultaController = TextEditingController();
   late String ?_valorProfissao;
   late String ?_valorLocal;
 
@@ -346,6 +349,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
   @override
   void dispose() {
     _conselhoController.dispose();
+    _valorConsultaController.dispose();
     super.dispose();
   }
 
@@ -418,8 +422,28 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
             delay: Duration(milliseconds: 1100),
           )
           .fadeIn(duration: Duration(milliseconds: 1500)),
+
           SizedBox(height: 20,),
 
+
+
+          // campo de preco da consulta
+          TextInput(
+            icone: "assets/images/coins.png",
+            placeholder: "Valor da consulta",
+            keyboardType: TextInputType.number,
+            mask: _maskPreco(),
+            controller: _valorConsultaController,
+          ).animate()
+          .slideY(
+            duration: Duration(milliseconds: 900),
+            begin: -0.5,
+            curve: Curves.easeOut,
+            delay: Duration(milliseconds: 1150),
+          )
+          .fadeIn(duration: Duration(milliseconds: 1500)),
+
+          SizedBox(height: 20,),
           
 
           // botao continuar
@@ -427,10 +451,18 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
             final profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
             String cod = _conselhoController.text.trim();
             final local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
+            final precoConsulta = _valorConsultaController.text.trim();
 
             // verifica se os campos sao vazios ou se a senha é mto curta
-            if(profissao == null || cod == "" || local == null){
+            if(profissao == null || cod == "" || local == null || precoConsulta == ""){
               print("falta completar campos");
+              return;
+            }
+
+            // verificar preco e transformar para decimal
+            final preco = Decimal.parse(precoConsulta.split(" ")[1]);
+            if(preco == Decimal.zero){
+              print("Preco baixo");
               return;
             }
 
@@ -462,6 +494,13 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
       mask: '#########/####', 
       filter: { "#": RegExp(r'[0-9]') },
       type: MaskAutoCompletionType.lazy,
+    );
+  }
+
+  CurrencyInputFormatter _maskPreco(){
+    return CurrencyInputFormatter(
+      leadingSymbol: 'R\$',
+      useSymbolPadding: true,
     );
   }
   
