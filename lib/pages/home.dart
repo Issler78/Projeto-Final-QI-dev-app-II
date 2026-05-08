@@ -129,7 +129,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 height: 78,
                 width: double.infinity,
-                margin: EdgeInsets.only(left: 35, right: 35),
+                margin: EdgeInsets.only(left: 20, right: 20),
                 constraints: BoxConstraints(maxWidth: 700),
                 child: ElevatedButton.icon(
                   style: ButtonStyle(
@@ -188,7 +188,7 @@ class _HomePageState extends State<HomePage> {
                 ),
                 height: 78,
                 width: double.infinity,
-                margin: EdgeInsets.only(left: 35, right: 35),
+                margin: EdgeInsets.only(left: 20, right: 20),
                 constraints: BoxConstraints(maxWidth: 700),
                 child: ElevatedButton.icon(
                   style: ButtonStyle(

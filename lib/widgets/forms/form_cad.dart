@@ -13,9 +13,7 @@ class FormCad1 extends StatefulWidget {
   const FormCad1({super.key});
   
   @override
-  State<FormCad1> createState() {
-    return _FormCad1State();
-  }
+  State<FormCad1> createState() => _FormCad1State();
 }
 
 class _FormCad1State extends State<FormCad1>{
