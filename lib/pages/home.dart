@@ -1,9 +1,32 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-class HomePage extends StatelessWidget {
-  const HomePage({super.key});
+class HomePage extends StatefulWidget {
+  const HomePage({ super.key });
+  
+  @override
+  State<StatefulWidget> createState() => _HomePageState();
+
+}
+
+class _HomePageState extends State<HomePage> {
+  bool logado = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _estaLogado();
+  }
+
+  Future<void> _estaLogado() async {
+    // verificar se o usuario esta logado e muda o estado da variavel
+    final prefs = await SharedPreferences.getInstance();
+    setState(() {
+      logado = prefs.getBool("logado") ?? false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -124,15 +147,15 @@ class HomePage extends StatelessWidget {
                     alignment: AlignmentGeometry.center,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/cadastrar");
+                    Navigator.pushNamed(context, logado ? "/consulta" : "/cadastrar");
                   },
                   icon: Image.asset(
-                    "assets/images/useradd.png",
+                    logado ? "assets/images/calendarw.png" : "assets/images/useradd.png",
                     width: 58,
                     height: 58,
                   ),
                   label: Text(
-                    "Cadastrar",
+                    logado ? "Agendar Consulta" : "Cadastrar",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -185,12 +208,12 @@ class HomePage extends StatelessWidget {
                     Navigator.pushNamed(context, "/login");
                   },
                   icon: Image.asset(
-                    'assets/images/userg.png',
+                    logado ? 'assets/images/clockgpng.png' : 'assets/images/userg.png',
                     width: 58,
                     height: 60,
                   ),
                   label: Text(
-                    "Entrar",
+                    logado ? "Minhas Consultas" : "Entrar",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Color.fromRGBO(0, 147, 22, 1),

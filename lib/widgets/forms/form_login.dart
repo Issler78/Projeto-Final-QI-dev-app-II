@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/inputs/text_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FormLogin extends StatefulWidget {
   const FormLogin({super.key});
@@ -88,7 +89,10 @@ class _FormLoginState extends State<FormLogin>{
 
 
           // botao continuar
-          BotaoContinuar(comIcone: true, texto: "Entrar", funcao: () {
+          BotaoContinuar(comIcone: true, texto: "Entrar", funcao: () async {
+            final NavigatorState nav = Navigator.of(context);
+            final SharedPreferences prefs = await SharedPreferences.getInstance();
+
             String email = _emailController.text.trim();
             String senha = _senhaController.text.trim();
 
@@ -101,13 +105,10 @@ class _FormLoginState extends State<FormLogin>{
 
             // chamar login do usuario 
             // logar
+            prefs.setBool("logado", true);
 
-            
-            Navigator.pushNamed(
-              context,
-              "/"
-            );
-
+            // mandar para tela inicial, agora logado
+            nav.pushNamed("/");
           })
           .animate()
           .slideY(

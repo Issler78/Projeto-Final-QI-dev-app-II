@@ -4,6 +4,7 @@ import 'package:pulsetime/widgets/buttons/botao_perfil.dart';
 import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
 import 'package:pulsetime/widgets/forms/form_cad.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class Cadastro extends StatelessWidget {
   const Cadastro({super.key});
@@ -134,11 +135,6 @@ class Cadastro2 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Nome: $nome");
-    print("email: $email");
-    print("tel: $telefone");
-    print("data: $dataNasc");
-    print("sexo: $sexo");
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -264,13 +260,6 @@ class Cadastro3 extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print("Nome: $nome");
-    print("email: $email");
-    print("tel: $telefone");
-    print("data: $dataNasc");
-    print("sexo: $sexo");
-    print("cpf: $cpf");
-    print("senha: $senha");
 
     return Scaffold(
       resizeToAvoidBottomInset: true,
@@ -368,19 +357,18 @@ class Cadastro3 extends StatelessWidget {
 
                       
                       // botoes de escolha de perfil
-                      BotaoPerfil(icone: "assets/images/Sample_User_Icon.png", textoPerfil: "Sou paciente", subtexto: "Quero agendar consultas para cuidar da minha saúde.", funcao: () {
+                      BotaoPerfil(icone: "assets/images/Sample_User_Icon.png", textoPerfil: "Sou paciente", subtexto: "Quero agendar consultas para cuidar da minha saúde.", funcao: () async {
+                        final NavigatorState nav = Navigator.of(context);
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
 
                         const String regra = "Paciente";
-                        print(regra);
 
                         // chamar cadastro do usuario!!!
-                        // chamar login do usuario!!!
+                        // chamar login do usuario!!! (por enquanto, para fins de teste, com apenas um logado true salvo)
+                        prefs.setBool("logado", true);
 
                         // mandar para tela inicial, agora logado
-                        Navigator.pushNamed(
-                          context, 
-                          "/"
-                        );
+                        nav.pushNamed("/");
 
                       }).animate().fadeIn(
                         duration: Duration(milliseconds: 1200),
@@ -396,19 +384,20 @@ class Cadastro3 extends StatelessWidget {
 
 
 
-                      BotaoPerfil(icone: "assets/images/est.png", textoPerfil: "Sou profissional", subtexto: "Quero gerenciar minha agenda e meus pacientes.", funcao: () {
-
+                      BotaoPerfil(icone: "assets/images/est.png", textoPerfil: "Sou profissional", subtexto: "Quero gerenciar minha agenda e meus pacientes.", funcao: () async {
+                        final NavigatorState nav = Navigator.of(context);
+                        final SharedPreferences prefs = await SharedPreferences.getInstance();
                         const String regra = "Profissional";
-                        print(regra);
 
                         // chamar cadastro do usuario!!!
-                        // chamar login do usuario!!!
+                        // chamar login do usuario!!! (por enquanto, para fins de teste, com apenas um logado true salvo)
+                        prefs.setBool("logado", true);
 
-                        Navigator.push(
-                          context,
+                        // mandar para o cadastro do profissional
+                        nav.push(
                           MaterialPageRoute(
                             builder: (context) => CadastroProfissional()
-                          ) 
+                          )
                         );
 
                       }).animate().fadeIn(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:pulsetime/pages/agendar_consulta.dart';
 import 'package:pulsetime/pages/cadastro.dart';
 import 'package:pulsetime/pages/home.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -24,7 +25,8 @@ class MyApp extends StatelessWidget{
       routes: {
         "/": (context) => HomePage(),
         "/cadastrar": (context) => Cadastro(),
-        "/login": (context) => Login()
+        "/login": (context) => Login(),
+        "/consulta": (context) => TipoConsulta(),
       },
     );
   }
