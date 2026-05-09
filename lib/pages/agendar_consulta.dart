@@ -243,24 +243,35 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
     // IMPLEMENTAR A BUSCA DOS PROFISSIONAIS DA PROFISSAO SELECIONADA
     final profissionaisBuscados = [
       {
+        "id": 1,
         "nome": "Marcos Lima",
         "cod": "0123456789/2024",
         "loc": "Clínica 1",
         "preco": Decimal.parse("150.00")
       },
       {
+        "id": 2,
         "nome": "Marcos Lima",
         "cod": "0123456789/2024",
         "loc": "Clínica 1",
         "preco": Decimal.parse("150.00")
       },
       {
+        "id": 3,
         "nome": "Marcos Lima",
         "cod": "0123456789/2024",
         "loc": "Clínica 1",
         "preco": Decimal.parse("150.00")
       },
       {
+        "id": 4,
+        "nome": "Marcos Lima",
+        "cod": "0123456789/2024",
+        "loc": "Clínica 1",
+        "preco": Decimal.parse("150.00")
+      },
+      {
+        "id": 5,
         "nome": "Marcos Lima",
         "cod": "0123456789/2024",
         "loc": "Clínica 1",
@@ -368,6 +379,7 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
                         itemBuilder: (context, index) {
                           // para cada profissional
                           return ProfissionalWidget(
+                            id: profissionais[index]['id'],
                             profissao: widget.profissao, 
                             nome: profissionais[index]['nome'], 
                             cod: profissionais[index]['cod'], 
@@ -375,7 +387,9 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
                             preco: profissionais[index]['preco'],
                           );
                         },
-                      )
+                      ),
+
+                      SizedBox(height: 30),
                     ],
                   ),
                 ),

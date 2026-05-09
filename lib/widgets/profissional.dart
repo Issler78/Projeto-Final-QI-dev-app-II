@@ -7,9 +7,11 @@ class ProfissionalWidget extends StatelessWidget {
   final String cod;
   final String loc;
   final Decimal preco;
+  final int id;
 
   const ProfissionalWidget({
     super.key,
+    required this.id,
     required this.nome,
     required this.cod,
     required this.loc,
@@ -31,7 +33,7 @@ class ProfissionalWidget extends StatelessWidget {
       height: 140,
       width: double.infinity,
       constraints: BoxConstraints(maxWidth: 700),
-      margin: EdgeInsets.only(bottom: 10),
+      margin: EdgeInsets.only(bottom: 20),
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.transparent),
@@ -50,17 +52,19 @@ class ProfissionalWidget extends StatelessWidget {
             // linha superior
             Row(
               mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 // foto perfil
                 Container(
                   width: 80,
                   height: 80,
                   margin: EdgeInsets.only(right: 15),
+                  clipBehavior: Clip.hardEdge,
                   decoration: BoxDecoration(
-                    borderRadius: BorderRadius.all(Radius.circular(10)),
+                    borderRadius: BorderRadiusGeometry.circular(10),
                   ),
                   child: Image.asset(
-                    "assets/images/doctor1.png",
+                    "images/doctor1.jpg",
                     width: 80,
                     height: 80,
                   ),
@@ -70,70 +74,67 @@ class ProfissionalWidget extends StatelessWidget {
 
                 Expanded(
                   child: Column(
-                    mainAxisSize: MainAxisSize.min,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      // nome
-                      Text(
-                        nome,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.black,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 18,
-                        ),
-                      ),
 
-                      // profissao
-                      Text(
-                        profissao,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Colors.blueAccent,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 16,
-                        ),
-                      ),
+                      SizedBox(
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            // nome
+                            Text(
+                              nome,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.black,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                height: 1
+                              ),
+                            ),
 
-                      // cod
-                      Text(
-                        cod,
-                        textAlign: TextAlign.start,
-                        style: TextStyle(
-                          color: Color.fromRGBO(94, 94, 94, 1),
-                          fontWeight: FontWeight.bold,
-                          fontSize: 14,
+                            // profissao
+                            Text(
+                              profissao,
+                              textAlign: TextAlign.start,
+                              style: TextStyle(
+                                color: Colors.blueAccent,
+                                fontWeight: FontWeight.bold,
+                                fontSize: 16,
+                                height: 1
+                              ),
+                            ),
+
+                            SizedBox(height: 15,),
+
+                            // preco
+                            Text(
+                              "A partir de",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: Color.fromRGBO(94, 94, 94, 1),
+                                fontSize: 14,
+                                height: 1
+                              ),
+                            ),
+                            Text(
+                              "R\$ ${preco.toStringAsFixed(2)}",
+                              textAlign: TextAlign.end,
+                              style: TextStyle(
+                                color: Color.fromRGBO(0, 147, 22, 1),
+                                fontWeight: FontWeight.bold,
+                                fontSize: 18,
+                                height: 1
+                              ),
+                            ),
+                          ]
+                          
                         ),
+
                       ),
                     ],
                   ),
-                ),
-
-
-
-                // preco
-                Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Text(
-                      "A partir de",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: Color.fromRGBO(94, 94, 94, 1),
-                        fontSize: 14,
-                      ),
-                    ),
-                    Text(
-                      "R\$ ${preco.toStringAsFixed(2)}",
-                      textAlign: TextAlign.end,
-                      style: TextStyle(
-                        color: Color.fromRGBO(0, 147, 22, 1),
-                        fontWeight: FontWeight.bold,
-                        fontSize: 18,
-                      ),
-                    ),
-                  ],
                 ),
               ],
             ),
@@ -150,7 +151,7 @@ class ProfissionalWidget extends StatelessWidget {
                 Container(
                   width: 28,
                   height: 28,
-                  margin: EdgeInsets.only(right: 15),
+                  margin: EdgeInsets.only(right: 10),
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.all(Radius.circular(10)),
                     color: Color.fromRGBO(79, 97, 162, .15),
@@ -165,7 +166,7 @@ class ProfissionalWidget extends StatelessWidget {
                   loc,
                   textAlign: TextAlign.start,
                   style: TextStyle(
-                    color: Colors.black,
+                    color: Color.fromRGBO(94, 94, 94, 1),
                     fontWeight: FontWeight.bold,
                     fontSize: 14,
                   ),
