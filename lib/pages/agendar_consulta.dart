@@ -385,9 +385,146 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
                             cod: profissionais[index]['cod'], 
                             loc: profissionais[index]['loc'], 
                             preco: profissionais[index]['preco'],
-                          );
+                          ).animate()
+                          .slideY(
+                            duration: Duration(milliseconds: 900),
+                            begin: -0.5,
+                            curve: Curves.easeOut,
+                            delay: Duration(milliseconds: 950),
+                          )
+                          .fadeIn(duration: Duration(milliseconds: 1500));
                         },
                       ),
+
+                      SizedBox(height: 30),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
+        )
+      ),
+    );
+  }
+}
+
+
+
+// tela de escolha do dia da consulta
+class EscolherDia extends StatefulWidget {
+  final int id;
+  final String nome;
+  final String loc;
+  final String profissao;
+  final Decimal preco;
+
+  const EscolherDia({super.key, required this.profissao, required this.id, required this.nome, required this.loc, required this.preco});
+
+  @override
+  State<StatefulWidget> createState() => _EscolherDiaState();
+
+}
+
+
+class _EscolherDiaState extends State<EscolherDia> {
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SingleChildScrollView(
+        child: Container(
+          width: double.infinity,
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.of(context).size.height,
+          ), // 100%
+          decoration: BoxDecoration( // para estilizar
+            color: Colors.white,
+          ),
+          child: Column(
+            children: [
+
+              // parte de cima do app
+              Stack(
+                children: [
+                  // logo com gradiente no fundo
+                  PaginaTopo(),
+                  BotaoVoltar(),
+                ],
+              ),
+
+
+              Container(
+                padding: EdgeInsets.only(left: 35, right: 35),
+                width: double.infinity,
+                child: Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      RichText(
+                        text: TextSpan(
+                          text: "Escolha a ",
+                          style: TextStyle(
+                            color: Colors.black,
+                            fontSize: 28,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          children: [
+                            TextSpan(
+                              text: "data e",
+                              style: TextStyle(
+                                color: Color.fromRGBO(11, 180, 255, 1),
+                                fontSize: 28,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ).animate().fadeIn(
+                        duration: Duration(milliseconds: 1200),
+                        delay: Duration(milliseconds: 650),
+                      ),
+
+                      Text(
+                        "um horário.",
+                        style: TextStyle(
+                        color: Color.fromRGBO(0, 147, 22, 1),
+                        fontSize: 28,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ).animate().fadeIn(
+                        duration: Duration(milliseconds: 1200),
+                        delay: Duration(milliseconds: 700),
+                      ),
+
+
+                      SizedBox(height: 10),
+
+
+
+                      // card com o profissional escolhido
+                      ProfissionalWidget2(
+                        id: widget.id,
+                        nome: widget.nome,
+                        loc: widget.loc,
+                        preco: widget.preco,
+                        profissao: widget.profissao,
+                      ).animate()
+                      .slideY(
+                        duration: Duration(milliseconds: 900),
+                        begin: -0.5,
+                        curve: Curves.easeOut,
+                        delay: Duration(milliseconds: 800),
+                      )
+                      .fadeIn(duration: Duration(milliseconds: 1500)),
+
+
+
+                      // "input" de escolha de data
+
 
                       SizedBox(height: 30),
                     ],
