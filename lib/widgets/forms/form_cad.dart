@@ -489,7 +489,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
   MaskTextInputFormatter _maskCon(){
     // mascara para o campo de telefone
     return MaskTextInputFormatter(
-      mask: '#########/####', 
+      mask: '######/####', 
       filter: { "#": RegExp(r'[0-9]') },
       type: MaskAutoCompletionType.lazy,
     );

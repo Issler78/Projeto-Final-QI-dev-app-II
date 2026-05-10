@@ -205,7 +205,7 @@ class _HomePageState extends State<HomePage> {
                     alignment: AlignmentGeometry.center,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, "/login");
+                    Navigator.pushNamed(context, logado ? "/minhas_consultas" : "/login");
                   },
                   icon: Image.asset(
                     logado ? 'assets/images/clockgpng.png' : 'assets/images/userg.png',

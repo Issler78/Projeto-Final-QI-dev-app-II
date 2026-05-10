@@ -4,6 +4,7 @@ import 'package:pulsetime/pages/cadastro.dart';
 import 'package:pulsetime/pages/home.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:pulsetime/pages/login.dart';
+import 'package:pulsetime/pages/minhas_consultas.dart';
 
 void main() {
   runApp(MyApp());
@@ -27,6 +28,7 @@ class MyApp extends StatelessWidget{
         "/cadastrar": (context) => Cadastro(),
         "/login": (context) => Login(),
         "/consulta": (context) => TipoConsulta(),
+        "/minhas_consultas": (context) => MinhasConsultas(),
       },
     );
   }
