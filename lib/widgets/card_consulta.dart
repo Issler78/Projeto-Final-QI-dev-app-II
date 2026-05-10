@@ -9,6 +9,7 @@ class ConsultaCard extends StatelessWidget {
   final String local;
   final String preco;
   final String data;
+  final String diaSemana;
   final String horario;
 
   const ConsultaCard({
@@ -19,7 +20,8 @@ class ConsultaCard extends StatelessWidget {
     required this.local,
     required this.preco,
     required this.data,
-    required this.horario,
+    required this.horario, 
+    required this.diaSemana,
   });
 
   @override
@@ -95,7 +97,7 @@ class ConsultaCard extends StatelessWidget {
           _InfoRow(
             imagem: 'assets/images/calendar-249.png',
             label: 'Data',
-            valor: data,
+            valor: "$data · $diaSemana",
           ),
           SizedBox(height: 10),
           _InfoRow(

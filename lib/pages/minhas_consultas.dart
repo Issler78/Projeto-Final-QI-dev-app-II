@@ -150,6 +150,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                           separatorBuilder: (context, _) => SizedBox(height: 12),
                           itemBuilder: (context, index) {
                             final String dia = consultasBuscadas[index]['data_e_horario'].day.toString();
+                            final String diaSemana = diasSemana[consultasBuscadas[index]['data_e_horario'].weekday - 1]; 
                             final String mes = meses[consultasBuscadas[index]['data_e_horario'].month];
                             final String ano = consultasBuscadas[index]['data_e_horario'].year.toString();
                             final String horario = "${consultasBuscadas[index]['data_e_horario'].hour.toString().padLeft(2, "0")}:00"; // padleft = caso o numero for menor que 10 => 9 => 09
@@ -161,6 +162,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                               local: consultasBuscadas[index]["loc"],
                               preco: "R\$ ${consultasBuscadas[index]["preco"].toStringAsFixed(2)}",
                               data: "$dia de $mes de $ano",
+                              diaSemana: diaSemana,
                               horario: horario
                             )
                             .animate()
