@@ -33,7 +33,7 @@ class ProfissionalWidget extends StatelessWidget {
       ),
       height: 140,
       width: double.infinity,
-      constraints: BoxConstraints(maxWidth: 700),
+      constraints: BoxConstraints(maxWidth: 400),
       margin: EdgeInsets.only(bottom: 20),
       child: ElevatedButton(
         style: ButtonStyle(
@@ -72,7 +72,7 @@ class ProfissionalWidget extends StatelessWidget {
                     borderRadius: BorderRadiusGeometry.circular(10),
                   ),
                   child: Image.asset(
-                    "images/doctor1.jpg",
+                    "assets/images/doctor1.jpg",
                     width: 80,
                     height: 80,
                   ),
@@ -211,7 +211,6 @@ class ProfissionalWidget2 extends StatelessWidget {
       height: 100,
       width: double.infinity,
       constraints: BoxConstraints(maxWidth: 700),
-      margin: EdgeInsets.only(bottom: 20),
       child: ElevatedButton(
         style: ButtonStyle(
           backgroundColor: WidgetStatePropertyAll(Colors.transparent),
@@ -242,7 +241,7 @@ class ProfissionalWidget2 extends StatelessWidget {
                     borderRadius: BorderRadiusGeometry.circular(10),
                   ),
                   child: Image.asset(
-                    "images/doctor1.jpg",
+                    "assets/images/doctor1.jpg",
                     width: 80,
                     height: 80,
                   ),
