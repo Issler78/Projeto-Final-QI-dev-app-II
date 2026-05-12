@@ -329,7 +329,7 @@ class _AgendaState extends State<AgendaWidget> {
     : false;
 
     // se o dia é o dia de hoje
-    final bool hoje = dia == DateTime.now().day &&
+    final bool ehHoje = dia == DateTime.now().day &&
     mesAtual.month == DateTime.now().month &&
     mesAtual.year == DateTime.now().year;
 
@@ -359,7 +359,7 @@ class _AgendaState extends State<AgendaWidget> {
               decoration: BoxDecoration(
                 color: estaSelecionado
                   ? Color.fromRGBO(11, 180, 255, 1)
-                  : hoje
+                  : ehHoje
                   ? Color.fromRGBO(94, 94, 94, .25)
                   : Colors.transparent,
                 shape: BoxShape.circle,
@@ -374,7 +374,7 @@ class _AgendaState extends State<AgendaWidget> {
                       : FontWeight.normal,
                     color: estaSelecionado
                       ? Colors.white
-                      : hoje
+                      : ehHoje
                       ? Colors.black
                       : estaDisponivel
                       ? Color.fromRGBO(0, 147, 22, 1)

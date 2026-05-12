@@ -306,8 +306,7 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
       return const SizedBox(width: 36, height: 36); // dia vazio caso seja null
     }
 
-    // verifica se o dia esta disponivel para agendar horario
-    final bool estaDisponivel = diasDisponiveis.contains(dia);
+
 
     // verifica se o dia esta selecionado, verificando seu dia, mes e ano
     final bool estaSelecionado = dataSelecionada != null
@@ -315,6 +314,37 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
     mesAtual.month == dataSelecionada!.month &&
     mesAtual.year == dataSelecionada!.year
     : false;
+
+
+
+    // se o dia é o dia de hoje (para colocar uma cor no fundo de cinza)
+    final bool ehHoje = dia == DateTime.now().day &&
+    mesAtual.month == DateTime.now().month &&
+    mesAtual.year == DateTime.now().year;
+
+
+
+    // data do container do dia
+    final DateTime dataDoDia = DateTime(
+      mesAtual.year,
+      mesAtual.month,
+      dia,
+    );
+    
+    // data de hoje
+    final DateTime hojeData = DateTime(
+      DateTime.now().year,
+      DateTime.now().month,
+      DateTime.now().day,
+    );
+
+
+
+    // verifica se o dia esta disponivel para agendar horario (verifica se esta disponivel nos dias disponiveis e se nao é uma data antiga)
+    final bool estaDisponivel =
+      diasDisponiveis.contains(dia) &&
+      dataDoDia.isAfter(hojeData);
+
 
     return MouseRegion(
       cursor: estaDisponivel
@@ -340,8 +370,10 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
           decoration: BoxDecoration(
             // se esta selecionado, tem fundo azul
             color: estaSelecionado
-                ? Color.fromRGBO(11, 180, 255, 1)
-                : Colors.transparent,
+                  ? Color.fromRGBO(11, 180, 255, 1)
+                  : ehHoje
+                  ? Color.fromRGBO(94, 94, 94, .25)
+                  : Colors.transparent,
             shape: BoxShape.circle,
           ),
           child: Center(
@@ -350,13 +382,15 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: estaDisponivel
-                    ? FontWeight.w600
+                    ? FontWeight.bold
                     : FontWeight.normal,
                 color: estaSelecionado
-                    ? Colors.white
-                    : estaDisponivel
-                    ? Color.fromRGBO(0, 147, 22, 1)
-                    : Color.fromRGBO(94, 94, 94, 1),
+                      ? Colors.white
+                      : ehHoje
+                      ? Colors.black
+                      : estaDisponivel
+                      ? Color.fromRGBO(0, 147, 22, 1)
+                      : Color.fromRGBO(94, 94, 94, 1)
               ),
             ),
           ),
