@@ -8,6 +8,7 @@ import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/inputs/date_input.dart';
 import 'package:pulsetime/widgets/inputs/select_input.dart';
 import 'package:pulsetime/widgets/inputs/text_input.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FormCad1 extends StatefulWidget {
   const FormCad1({super.key});
@@ -445,7 +446,9 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
           
 
           // botao continuar
-          BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () {
+          BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () async {
+            final SharedPreferences prefs = await SharedPreferences.getInstance();
+
             final profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
             String cod = _conselhoController.text.trim();
             final local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
@@ -465,6 +468,8 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
             }
 
             // chamar cadastro de profissional!!!
+            prefs.setBool("logadoPro", true);
+            prefs.setBool("temAgenda", false);
 
             // mandar para tela inicial, agora logado
             Navigator.pushNamed(

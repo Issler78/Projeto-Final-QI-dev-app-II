@@ -13,6 +13,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   bool logado = false;
+  bool logadoPro = false;
 
   @override
   void initState() {
@@ -25,6 +26,7 @@ class _HomePageState extends State<HomePage> {
     final prefs = await SharedPreferences.getInstance();
     setState(() {
       logado = prefs.getBool("logado") ?? false;
+      logadoPro = prefs.getBool("logadoPro") ?? false;
     });
   }
 
@@ -106,7 +108,7 @@ class _HomePageState extends State<HomePage> {
 
               // botoes
 
-              // botao agendar consulta / cadastrar (MUDAR DEPOIS DE LOGADO!!!)
+              // botao agendar consulta / cadastrar / minha agenda (MUDAR DEPOIS DE LOGADO!!!)
               Container(
                 decoration: BoxDecoration(
                   // decorando o botao
@@ -147,7 +149,11 @@ class _HomePageState extends State<HomePage> {
                     alignment: AlignmentGeometry.center,
                   ),
                   onPressed: () {
-                    Navigator.pushNamed(context, logado ? "/consulta" : "/cadastrar");
+                    Navigator.pushNamed(context, 
+                      logado ? 
+                      logadoPro ? "/minha_agenda" : "/consulta"
+                      : "/cadastrar"
+                    );
                   },
                   icon: Image.asset(
                     logado ? "assets/images/calendarw.png" : "assets/images/useradd.png",
@@ -155,7 +161,7 @@ class _HomePageState extends State<HomePage> {
                     height: 58,
                   ),
                   label: Text(
-                    logado ? "Agendar Consulta" : "Cadastrar",
+                    logado ? logadoPro ? "Minha Agenda" : "Agendar Consulta" : "Cadastrar",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -170,63 +176,74 @@ class _HomePageState extends State<HomePage> {
                 delay: Duration(milliseconds: 1100),
               ),
 
+
+
               SizedBox(height: 30),
 
+
+
               // botao minhas consultas / entrar (MUDAR DEPOIS DE LOGADO!!!)
-              Container(
-                decoration: BoxDecoration(
-                  // decorando o botao
-                  color: Colors.white,
-                  borderRadius: BorderRadius.all(Radius.circular(20)),
-                  boxShadow: List.of([
-                    BoxShadow(
-                      color: Color.fromRGBO(0, 0, 0, .25),
-                      blurRadius: 4,
-                      offset: Offset(0, 4),
-                    ),
-                  ]),
-                ),
-                height: 78,
-                width: double.infinity,
-                margin: EdgeInsets.only(left: 20, right: 20),
-                constraints: BoxConstraints(maxWidth: 700),
-                child: ElevatedButton.icon(
-                  style: ButtonStyle(
-                    // deixando o "botao" transparente para utilizar o background do container
-                    backgroundColor: WidgetStatePropertyAll(Colors.transparent),
-                    shadowColor: WidgetStateProperty.all(Colors.transparent),
-                    shape: WidgetStatePropertyAll(
-                      RoundedRectangleBorder(
-                        borderRadius: BorderRadiusGeometry.all(
-                          Radius.circular(20),
+              if (logadoPro)
+                SizedBox(height: 78,)
+              else
+                Container(
+                  decoration: BoxDecoration(
+                    // decorando o botao
+                    color: Colors.white,
+                    borderRadius: BorderRadius.all(Radius.circular(20)),
+                    boxShadow: List.of([
+                      BoxShadow(
+                        color: Color.fromRGBO(0, 0, 0, .25),
+                        blurRadius: 4,
+                        offset: Offset(0, 4),
+                      ),
+                    ]),
+                  ),
+                  height: 78,
+                  width: double.infinity,
+                  margin: EdgeInsets.only(left: 20, right: 20),
+                  constraints: BoxConstraints(maxWidth: 700),
+                  child: ElevatedButton.icon(
+                    style: ButtonStyle(
+                      // deixando o "botao" transparente para utilizar o background do container
+                      backgroundColor: WidgetStatePropertyAll(Colors.transparent),
+                      shadowColor: WidgetStateProperty.all(Colors.transparent),
+                      shape: WidgetStatePropertyAll(
+                        RoundedRectangleBorder(
+                          borderRadius: BorderRadiusGeometry.all(
+                            Radius.circular(20),
+                          ),
                         ),
                       ),
+                      alignment: AlignmentGeometry.center,
                     ),
-                    alignment: AlignmentGeometry.center,
-                  ),
-                  onPressed: () {
-                    Navigator.pushNamed(context, logado ? "/minhas_consultas" : "/login");
-                  },
-                  icon: Image.asset(
-                    logado ? 'assets/images/clockgpng.png' : 'assets/images/userg.png',
-                    width: 58,
-                    height: 60,
-                  ),
-                  label: Text(
-                    logado ? "Minhas Consultas" : "Entrar",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Color.fromRGBO(0, 147, 22, 1),
-                      fontSize: 28,
-                      fontWeight: FontWeight.w500,
+                    onPressed: () {
+                      Navigator.pushNamed(context, 
+                        logado ? 
+                        "/minhas_consultas" 
+                        : "/login"
+                      );
+                    },
+                    icon: Image.asset(
+                      logado ? 'assets/images/clockgpng.png' : 'assets/images/userg.png',
+                      width: 58,
+                      height: 60,
                     ),
+                    label: Text(
+                      logado ? "Minhas Consultas" : "Entrar",
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color.fromRGBO(0, 147, 22, 1),
+                        fontSize: 28,
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                    iconAlignment: IconAlignment.start,
                   ),
-                  iconAlignment: IconAlignment.start,
+                ).animate().fadeIn(
+                  duration: Duration(milliseconds: 1200),
+                  delay: Duration(milliseconds: 1300),
                 ),
-              ).animate().fadeIn(
-                duration: Duration(milliseconds: 1200),
-                delay: Duration(milliseconds: 1300),
-              ),
 
               SizedBox(height: 40),
 

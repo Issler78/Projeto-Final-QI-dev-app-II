@@ -7,8 +7,9 @@ class SelectInput extends StatefulWidget {
   final List<String> items;
   final String ?value;
   final void Function(String ?valor) funcao;
+  final double fontSize;
 
-  const SelectInput({ super.key, required this.icone, required this.placeholder, required this.items, required this.value, required this.funcao });
+  const SelectInput({ super.key, required this.icone, required this.placeholder, required this.items, required this.value, required this.funcao, this.fontSize = 20 });
   
   @override
   State<StatefulWidget> createState() => _SelectInputState();
@@ -65,13 +66,13 @@ class _SelectInputState extends State<SelectInput> {
               underline: SizedBox(),
               style: GoogleFonts.inter(
                 color: Color.fromRGBO(94, 94, 94, 1),
-                fontSize: 20,
+                fontSize: widget.fontSize,
               ),
               hint: Text(
                 widget.placeholder,
                 style: GoogleFonts.inter(
                   color: Color.fromRGBO(94, 94, 94, 1),
-                  fontSize: 20,
+                  fontSize: widget.fontSize,
                 ),
               ),
               icon: RotatedBox( // rotacionar a imagem

@@ -107,6 +107,10 @@ class _FormLoginState extends State<FormLogin>{
             // logar
             prefs.setBool("logado", true);
 
+            // PARA FIM DE TESTE
+            // prefs.setBool("logadoPro", true); 
+            prefs.setBool("temAgenda", false);
+
             // mandar para tela inicial, agora logado
             nav.pushNamed("/");
           })
