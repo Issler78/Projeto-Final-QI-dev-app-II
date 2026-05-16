@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/pages/agendar_consulta.dart';
 import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
+import 'package:pulsetime/widgets/mensagem_erro.dart';
 
 class CalendarioEHorariosWidget extends StatefulWidget {
   final int id;
@@ -21,6 +22,7 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
   DateTime? dataSelecionada;
   String? horarioSelecionado; // possivelmente tera que trocar de formato no futuro
   DateTime mesAtual = DateTime.now();
+  String ?_erro;
 
   // meses
   final List<String> meses = [
@@ -138,13 +140,18 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
         SizedBox(height: 30,),
 
 
+        _erro != null ? MensagemErro(mensagem: _erro!) : SizedBox(),
+        SizedBox(height: 10,),
+
 
         // botao
         BotaoContinuar(comIcone: true, texto: "Continuar", funcao: () {
 
           // verificação se a data e o horario foram escolhidos
           if(dataSelecionada == null || horarioSelecionado == null){
-            print("selecione data e horario");
+            setState(() {
+              _erro = "Por favor, selecione uma data e um horário para prosseguir";
+            });
             return;
           }
 
@@ -156,6 +163,12 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
             int.parse(horarioSelecionado.toString().split(":")[0]) // converte a string da hora em numero int
           );
 
+
+
+
+          setState(() {
+            _erro = null;
+          });
           Navigator.push(
             context, 
             MaterialPageRoute(

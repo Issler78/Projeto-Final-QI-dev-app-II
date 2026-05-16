@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/inputs/dia_semana_profissional.dart';
 import 'package:pulsetime/widgets/inputs/select_input.dart';
+import 'package:pulsetime/widgets/mensagem_erro.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class ConfigAgenda extends StatefulWidget {
@@ -18,6 +19,7 @@ class ConfigAgenda extends StatefulWidget {
 
 class _ConfigAgendaWidget extends State<ConfigAgenda> {
   final ScrollController _scrollController = ScrollController();
+
   static List<Map<String, dynamic>> dias = [
     {"label": "Seg", "value": 1},
     {"label": "Ter", "value": 2},
@@ -52,6 +54,10 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
   String ?_horarioInicioSelecionado;
   String ?_horarioFimSelecionado;
   List<String> ?_horariosFim;
+
+
+  
+  String ?_erro;
 
   @override
   void initState() {
@@ -301,6 +307,10 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
 
           
 
+          _erro != null ? MensagemErro(mensagem: _erro!) : SizedBox(),
+          SizedBox(height: 10,),
+
+
           // botao de salvar agenda ou salvar alteracoes
           BotaoContinuar(
             comIcone: false, 
@@ -309,7 +319,9 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
               
               // verificar inputs
               if(diasSelecionados.isEmpty || _horarioInicioSelecionado == null || _horarioFimSelecionado == null){
-                print("falta selecionar dias e horarios");
+                setState(() {
+                  _erro = "Por favor, selecione ao menos um dia e defina o seu horário de atendimento";
+                });
                 return;
               }
 
@@ -319,6 +331,11 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
 
               _mudarStatusAgenda();
 
+
+
+              setState(() {
+                _erro = null;
+              });
               // resetar a pagina
               Navigator.pushReplacementNamed(context, '/minha_agenda');
 
