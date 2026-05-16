@@ -8,6 +8,7 @@ import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/inputs/date_input.dart';
 import 'package:pulsetime/widgets/inputs/select_input.dart';
 import 'package:pulsetime/widgets/inputs/text_input.dart';
+import 'package:pulsetime/widgets/mensagem_erro.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FormCad1 extends StatefulWidget {
@@ -22,13 +23,10 @@ class _FormCad1State extends State<FormCad1>{
   final TextEditingController _emailController = TextEditingController();
   final TextEditingController _telController = TextEditingController();
   final TextEditingController _dataController = TextEditingController();
-  late String ?_valorS;
+  String ?_valorS;
+  String ?_erro;
 
-  @override
-  void initState() {
-    _valorS = null;
-    super.initState();
-  }
+
 
   @override
   void dispose() {
@@ -126,8 +124,12 @@ class _FormCad1State extends State<FormCad1>{
             delay: Duration(milliseconds: 1200),
           )
           .fadeIn(duration: Duration(milliseconds: 1500)),
-          SizedBox(height: 20,),
+          SizedBox(height: 30,),
 
+
+          // se _erro for diferente que null, mostra um erro na tela
+          _erro != null ? MensagemErro(mensagem: _erro!) : SizedBox(),
+          SizedBox(height: 10,),
           
 
           // botao continuar
@@ -138,17 +140,38 @@ class _FormCad1State extends State<FormCad1>{
             String dataNasc = _dataController.text.trim();
             final sexo = _valorS == null || _valorS == "" ? null : _valorS!.trim();
 
+            // erro de campos vazios
             if(nome == "" || email == "" || telefone == "" || dataNasc == "" || sexo == null){
-              print("falta completar campos");
+              setState(() {
+                _erro = "Campos vazios";
+              });
               return;
-            } else {
-              Navigator.push(
-                context,
-                MaterialPageRoute(
-                  builder: (context) => Cadastro2(nome: nome, email: email, telefone: telefone, dataNasc: dataNasc, sexo: sexo)
-                ) 
-              );
             }
+
+            // erro de email invalido (verificacao simples)
+            if(!email.contains("@")){
+              setState(() {
+                _erro = "Insira um email válido";
+              });
+              return;
+            }
+
+            // erro de numero de telefone invalido 
+            if(telefone.length != 15){
+              setState(() {
+                _erro = "Insira um número de telefone válido";
+              });
+              return;
+            }
+
+            _erro = null;
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => Cadastro2(nome: nome, email: email, telefone: telefone, dataNasc: dataNasc,sexo: sexo)
+              ) 
+            );
+            
 
           })
           .animate()
@@ -197,6 +220,7 @@ class _FormCad2State extends State<FormCad2>{
   final TextEditingController _cpfController = TextEditingController();
   final TextEditingController _senhaController = TextEditingController();
   final TextEditingController _confSenhaController = TextEditingController();
+  String ?_erro;
 
   @override
   void dispose() {
@@ -255,9 +279,12 @@ class _FormCad2State extends State<FormCad2>{
             delay: Duration(milliseconds: 1100),
           )
           .fadeIn(duration: Duration(milliseconds: 1500)),
-          SizedBox(height: 20,),
-
+          SizedBox(height: 30,),
           
+
+          // mensagem de erro
+          _erro != null ? MensagemErro(mensagem: _erro!) : SizedBox(),
+          SizedBox(height: 10,),
 
           // botao continuar
           BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () {
@@ -265,22 +292,39 @@ class _FormCad2State extends State<FormCad2>{
             String senha = _senhaController.text.trim();
             String confSenha = _confSenhaController.text.trim();
 
-            // verifica se os campos sao vazios ou se a senha é mto curta
-            if(cpf == "" || senha == ""){
-              print("falta completar campos");
+            // verifica se os campos sao vazios
+            if(cpf == "" || senha == "" || confSenha == ""){
+              setState(() {
+                _erro = "Campos vazios";
+              });
               return;
-            } else if(senha.length < 6) {
-              print("mínimo de 6 caracteres");
+            } 
+            
+            // verifica se o cpf é valido
+            if(cpf.length != 14){
+              setState(() {
+                _erro = "Insira um CPF válido";
+              });
+              return;
+            }
+
+            // verifica se a senha tem pelomenos 6 caracteres
+            if(senha.length < 6) {
+              setState(() {
+                _erro = "A senha deve ter pelo menos 6 caracteres.";
+              });
               return;
             }
 
             // verifica se as senhas correspondem
             if(confSenha != senha) {
-              print("o campo 'confirme sua senha' não corresponde ao campo 'senha'");
+              setState(() {
+                _erro = "O campo 'Confirme sua senha' não corresponde ao campo 'Senha'";
+              });
               return;
             }
 
-            
+            _erro = null;
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -335,15 +379,9 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
 
   final TextEditingController _conselhoController = TextEditingController();
   final TextEditingController _valorConsultaController = TextEditingController();
-  late String ?_valorProfissao;
-  late String ?_valorLocal;
-
-  @override
-  void initState() {
-    _valorProfissao = null;
-    _valorLocal = null;
-    super.initState();
-  }
+  String ?_valorProfissao;
+  String ?_valorLocal;
+  String ?_erro;
 
   @override
   void dispose() {
@@ -388,7 +426,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
 
 
           // campo de crm
-          TextInput(icone: "assets/images/doc.png", placeholder: "N° do conselho", controller: _conselhoController, mask: _maskCon(),)
+          TextInput(icone: "assets/images/doc.png", placeholder: "N° do conselho", controller: _conselhoController, mask: _maskCod(),)
           .animate()
           .slideY(
             duration: Duration(milliseconds: 900),
@@ -442,36 +480,56 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
           )
           .fadeIn(duration: Duration(milliseconds: 1500)),
 
-          SizedBox(height: 20,),
+          SizedBox(height: 30,),
+
+          _erro != null ? MensagemErro(mensagem: _erro!) : SizedBox(),
+          SizedBox(height: 10,),
           
 
           // botao continuar
           BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () async {
             final SharedPreferences prefs = await SharedPreferences.getInstance();
 
-            final profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
-            String cod = _conselhoController.text.trim();
-            final local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
-            final precoConsulta = _valorConsultaController.text.trim();
+            final String ?profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
+            final String cod = _conselhoController.text.trim();
+            final String ?local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
+            final String precoConsulta = _valorConsultaController.text.trim();
 
             // verifica se os campos sao vazios ou se a senha é mto curta
             if(profissao == null || cod == "" || local == null || precoConsulta == ""){
-              print("falta completar campos");
+              setState(() {
+                _erro = "Campos vazios";
+              });
               return;
             }
 
-            // verificar preco e transformar para decimal
-            final preco = Decimal.parse(precoConsulta.split(" ")[1]);
-            if(preco == Decimal.zero){
-              print("Preco baixo");
+            // verifica o codigo
+            if(cod.length != 11){
+              setState(() {
+                _erro = "Insira um código/número de conselho válido";
+              });
               return;
             }
+
+            // verificar se o preco é maior que 1
+            final preco = Decimal.parse(precoConsulta.split(" ")[1]);
+            if(preco < Decimal.one){
+              setState(() {
+                _erro = "O preço mínimo é R\$1.00";
+              });
+              return;  
+            }
+
+
 
             // chamar cadastro de profissional!!!
             prefs.setBool("logadoPro", true);
             prefs.setBool("temAgenda", false);
 
+
+
             // mandar para tela inicial, agora logado
+            _erro = null;
             Navigator.pushNamed(
               context, 
               "/",
@@ -491,8 +549,8 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
     );
   }
 
-  MaskTextInputFormatter _maskCon(){
-    // mascara para o campo de telefone
+  MaskTextInputFormatter _maskCod(){
+    // mascara para o campo de codigo/numero do conselho
     return MaskTextInputFormatter(
       mask: '######/####', 
       filter: { "#": RegExp(r'[0-9]') },

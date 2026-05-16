@@ -360,12 +360,15 @@ class Cadastro3 extends StatelessWidget {
                       BotaoPerfil(icone: "assets/images/Sample_User_Icon.png", textoPerfil: "Sou paciente", subtexto: "Quero agendar consultas para cuidar da minha saúde.", funcao: () async {
                         final NavigatorState nav = Navigator.of(context);
                         final SharedPreferences prefs = await SharedPreferences.getInstance();
+                        // const String regra = "Paciente";
 
-                        const String regra = "Paciente";
+
 
                         // chamar cadastro do usuario!!!
                         // chamar login do usuario!!! (por enquanto, para fins de teste, com apenas um logado true salvo)
                         prefs.setBool("logado", true);
+
+
 
                         // mandar para tela inicial, agora logado
                         nav.pushNamed("/");
@@ -387,7 +390,7 @@ class Cadastro3 extends StatelessWidget {
                       BotaoPerfil(icone: "assets/images/est.png", textoPerfil: "Sou profissional", subtexto: "Quero gerenciar minha agenda e meus pacientes.", funcao: () async {
                         final NavigatorState nav = Navigator.of(context);
                         final SharedPreferences prefs = await SharedPreferences.getInstance();
-                        const String regra = "Profissional";
+                        //const String regra = "Profissional";
 
                         // chamar cadastro do usuario!!!
                         // chamar login do usuario!!! (por enquanto, para fins de teste, com apenas um logado true salvo)
