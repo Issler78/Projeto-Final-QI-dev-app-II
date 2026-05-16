@@ -164,7 +164,12 @@ class _FormCad1State extends State<FormCad1>{
               return;
             }
 
-            _erro = null;
+
+
+            // ir para proxima etapa do cadastro
+            setState(() {
+              _erro = null;
+            });
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -324,7 +329,11 @@ class _FormCad2State extends State<FormCad2>{
               return;
             }
 
-            _erro = null;
+
+            // ir para proxima etapa do cadastro
+            setState(() {
+              _erro = null;
+            });
             Navigator.push(
               context,
               MaterialPageRoute(
@@ -529,7 +538,9 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
 
 
             // mandar para tela inicial, agora logado
-            _erro = null;
+            setState(() {
+              _erro = null;
+            });
             Navigator.pushNamed(
               context, 
               "/",
