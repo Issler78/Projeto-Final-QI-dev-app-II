@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
+import 'package:pulsetime/widgets/buttons/botao_sair_conta.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -47,8 +48,14 @@ class _HomePageState extends State<HomePage> {
           ),
           child: Column(
             children: [
-              // logo com gradiente no fundo
-              PaginaTopo(height: 370),
+              // parte de cima do app
+              Stack(
+                children: [
+                  // logo com gradiente no fundo
+                  PaginaTopo(height: 370),
+                  logado ? BotaoSairConta() : SizedBox()
+                ]
+              ),
 
               SizedBox(height: 10),
 
