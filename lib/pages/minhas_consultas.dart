@@ -34,38 +34,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
   // dias da semana
   static List<String> diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
 
-
-  // RECUPERAR PELO BACK END NO FUTURO
-  // final List<Map<String, dynamic>> consultasBuscadas = [
-  //   {
-  //     "id": 1,
-  //     "profissional": "Marcos Lima",
-  //     "profissao": "Clínico geral",
-  //     "cod": "0123456789/2024",
-  //     "loc": "Clínica 1",
-  //     "preco": Decimal.parse("150.00"),
-  //     "data_e_horario": DateTime.now()
-  //   },
-  //   {
-  //     "id": 2,
-  //     "profissional": "Marcos Lima",
-  //     "profissao": "Clínico geral",
-  //     "cod": "0123456789/2024",
-  //     "loc": "Clínica 1",
-  //     "preco": Decimal.parse("150.00"),
-  //     "data_e_horario": DateTime.now()
-  //   },
-  //   {
-  //     "id": 3,
-  //     "profissional": "Marcos Lima",
-  //     "profissao": "Clínico geral",
-  //     "cod": "0123456789/2024",
-  //     "loc": "Clínica 1",
-  //     "preco": Decimal.parse("150.00"),
-  //     "data_e_horario": DateTime.now()
-  //   },
-  // ];
-
+  // consultas salvas
   List<Map<String, dynamic>>? consultasBuscadas;
 
   @override
@@ -74,6 +43,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
     _minhasConsultas();
   }
 
+  // funcao que retorna as consultas salvas
   Future<void> _minhasConsultas() async {
     final prefs = await SharedPreferences.getInstance();
     final String? consultas = prefs.getString("minhas_consultas");
@@ -83,6 +53,23 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
       consultasBuscadas = consultas != null 
         ? List.from(jsonDecode(consultas)) 
         : null;
+    });
+  }
+
+  // funcao de cancelar/remover a consulta
+  Future<void> _cancelarConsulta(int consultaIndex) async {
+    final prefs = await SharedPreferences.getInstance();
+    final String consultas = prefs.getString("minhas_consultas")!;
+
+    // remover a consulta da lista de consultas pelo seu index
+    final List<dynamic> listaConsultas = jsonDecode(consultas);
+    listaConsultas.removeAt(consultaIndex);
+
+    // salvar na "memoria" a nova lista sem a consulta removida
+    prefs.setString("minhas_consultas", jsonEncode(listaConsultas));
+
+    setState(() {
+      consultasBuscadas = List.from(jsonDecode(consultas));
     });
   }
 
@@ -158,7 +145,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
 
 
                     // lista de consultas
-                    consultasBuscadas != null 
+                    consultasBuscadas?.isNotEmpty == true
                       ? Container(
                         constraints: BoxConstraints(
                           maxWidth: 700
@@ -186,7 +173,13 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                               preco: "R\$ ${consultasBuscadas![index]["preco"]}",
                               data: "$dia de $mes de $ano",
                               diaSemana: diaSemana,
-                              horario: horario
+                              horario: horario,
+                              funcaoCancelar: () {
+                                _cancelarConsulta(index);
+
+                                // resetar a pagina
+                                Navigator.pushReplacementNamed(context, '/minhas_consultas');
+                              },
                             )
                             .animate()
                             .slideY(

@@ -11,6 +11,7 @@ class ConsultaCard extends StatelessWidget {
   final String data;
   final String diaSemana;
   final String horario;
+  final VoidCallback funcaoCancelar;
 
   const ConsultaCard({
     super.key, 
@@ -21,7 +22,8 @@ class ConsultaCard extends StatelessWidget {
     required this.preco,
     required this.data,
     required this.horario, 
-    required this.diaSemana,
+    required this.diaSemana, 
+    required this.funcaoCancelar,
   });
 
   @override
@@ -130,11 +132,7 @@ class ConsultaCard extends StatelessWidget {
                   corTexto: Color.fromRGBO(200, 0, 0, 1),
                   corBorda: Color.fromRGBO(200, 0, 0, .35),
                   corFundo: Color.fromRGBO(200, 0, 0, .07),
-                  onTap: () {
-
-                    // CHAMAR O BACK END PARA CANCELAR A CONSULTA AQUI!!!
-
-                  },
+                  onTap: funcaoCancelar,
                 ),
               ),
               SizedBox(width: 8),
