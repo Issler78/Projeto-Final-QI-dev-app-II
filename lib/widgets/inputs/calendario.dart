@@ -6,13 +6,14 @@ import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/mensagem_erro.dart';
 
 class CalendarioEHorariosWidget extends StatefulWidget {
-  final int id;
+  final int profissionalId;
   final String nome;
+  final String cod;
   final String profissao;
   final String loc;
   final Decimal preco;
 
-  const CalendarioEHorariosWidget({super.key, required this.id, required this.nome, required this.profissao, required this.loc, required this.preco});
+  const CalendarioEHorariosWidget({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.cod});
 
   @override
   State<StatefulWidget> createState() => _CalendarioState();
@@ -172,9 +173,10 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (context) => ResumoConsulta(
-                id: widget.id, 
+              builder: (context) => ResumoConsultaPage(
+                profissionalId: widget.profissionalId, 
                 nome: widget.nome,
+                cod: widget.cod,
                 profissao: widget.profissao, 
                 loc: widget.loc, 
                 preco: widget.preco, 

@@ -1,9 +1,10 @@
-import 'package:decimal/decimal.dart';
+import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
 import 'package:pulsetime/widgets/card_consulta.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 // tela principal de listagem de consultas
 class MinhasConsultas extends StatefulWidget {
@@ -35,35 +36,55 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
 
 
   // RECUPERAR PELO BACK END NO FUTURO
-  final List<Map<String, dynamic>> consultasBuscadas = [
-    {
-      "id": 1,
-      "profissional": "Marcos Lima",
-      "profissao": "Clínico geral",
-      "cod": "0123456789/2024",
-      "loc": "Clínica 1",
-      "preco": Decimal.parse("150.00"),
-      "data_e_horario": DateTime.now()
-    },
-    {
-      "id": 2,
-      "profissional": "Marcos Lima",
-      "profissao": "Clínico geral",
-      "cod": "0123456789/2024",
-      "loc": "Clínica 1",
-      "preco": Decimal.parse("150.00"),
-      "data_e_horario": DateTime.now()
-    },
-    {
-      "id": 3,
-      "profissional": "Marcos Lima",
-      "profissao": "Clínico geral",
-      "cod": "0123456789/2024",
-      "loc": "Clínica 1",
-      "preco": Decimal.parse("150.00"),
-      "data_e_horario": DateTime.now()
-    },
-  ];
+  // final List<Map<String, dynamic>> consultasBuscadas = [
+  //   {
+  //     "id": 1,
+  //     "profissional": "Marcos Lima",
+  //     "profissao": "Clínico geral",
+  //     "cod": "0123456789/2024",
+  //     "loc": "Clínica 1",
+  //     "preco": Decimal.parse("150.00"),
+  //     "data_e_horario": DateTime.now()
+  //   },
+  //   {
+  //     "id": 2,
+  //     "profissional": "Marcos Lima",
+  //     "profissao": "Clínico geral",
+  //     "cod": "0123456789/2024",
+  //     "loc": "Clínica 1",
+  //     "preco": Decimal.parse("150.00"),
+  //     "data_e_horario": DateTime.now()
+  //   },
+  //   {
+  //     "id": 3,
+  //     "profissional": "Marcos Lima",
+  //     "profissao": "Clínico geral",
+  //     "cod": "0123456789/2024",
+  //     "loc": "Clínica 1",
+  //     "preco": Decimal.parse("150.00"),
+  //     "data_e_horario": DateTime.now()
+  //   },
+  // ];
+
+  List<Map<String, dynamic>>? consultasBuscadas;
+
+  @override
+  void initState() {
+    super.initState();
+    _minhasConsultas();
+  }
+
+  Future<void> _minhasConsultas() async {
+    final prefs = await SharedPreferences.getInstance();
+    final String? consultas = prefs.getString("minhas_consultas");
+
+    setState(() {
+      // se existe um json com consultas, transforma a string json em um objeto
+      consultasBuscadas = consultas != null 
+        ? List.from(jsonDecode(consultas)) 
+        : null;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -137,30 +158,32 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
 
 
                     // lista de consultas
-                    if (consultasBuscadas.isEmpty) _EmptyState()
-                    else
-                      Container(
+                    consultasBuscadas != null 
+                      ? Container(
                         constraints: BoxConstraints(
                           maxWidth: 700
                         ),
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: NeverScrollableScrollPhysics(),
-                          itemCount: consultasBuscadas.length,
+                          itemCount: consultasBuscadas!.length,
                           separatorBuilder: (context, _) => SizedBox(height: 12),
                           itemBuilder: (context, index) {
-                            final String dia = consultasBuscadas[index]['data_e_horario'].day.toString();
-                            final String diaSemana = diasSemana[consultasBuscadas[index]['data_e_horario'].weekday - 1]; 
-                            final String mes = meses[consultasBuscadas[index]['data_e_horario'].month];
-                            final String ano = consultasBuscadas[index]['data_e_horario'].year.toString();
-                            final String horario = "${consultasBuscadas[index]['data_e_horario'].hour.toString().padLeft(2, "0")}:00"; // padleft = caso o numero for menor que 10 => 9 => 09
+                            // variaveis para criar o card da consulta
+                            final data = DateTime.parse(consultasBuscadas![index]['data_e_horario']); // transforma a string do dia em um DateTime
+
+                            final String dia = data.day.toString();
+                            final String diaSemana = diasSemana[data.weekday - 1]; 
+                            final String mes = meses[data.month];
+                            final String ano = data.year.toString();
+                            final String horario = "${data.hour.toString().padLeft(2, "0")}:00"; // padleft = caso o numero for menor que 10 => 9 => 09
 
                             return ConsultaCard(
-                              nome: consultasBuscadas[index]["profissional"],
-                              profissao: consultasBuscadas[index]["profissao"],
-                              cod: consultasBuscadas[index]["cod"],
-                              local: consultasBuscadas[index]["loc"],
-                              preco: "R\$ ${consultasBuscadas[index]["preco"].toStringAsFixed(2)}",
+                              nome: consultasBuscadas![index]["nome_profissional"],
+                              profissao: consultasBuscadas![index]["profissao"],
+                              cod: consultasBuscadas![index]["cod"],
+                              local: consultasBuscadas![index]["loc"],
+                              preco: "R\$ ${consultasBuscadas![index]["preco"]}",
                               data: "$dia de $mes de $ano",
                               diaSemana: diaSemana,
                               horario: horario
@@ -176,6 +199,15 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                           }
                         ),
                       )
+                      : _SemConsultaState()
+                      .animate()
+                      .slideY(
+                        duration: Duration(milliseconds: 900),
+                        begin: -0.4,
+                        curve: Curves.easeOut,
+                        delay: Duration(milliseconds: 850),
+                      )
+                      .fadeIn(duration: Duration(milliseconds: 1200))
                   ],
                 ),
               ),
@@ -192,7 +224,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
 
 
 // tela exibida quando nao tem nenhuma consulta
-class _EmptyState extends StatelessWidget {
+class _SemConsultaState extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const Padding(

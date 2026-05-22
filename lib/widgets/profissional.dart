@@ -49,7 +49,7 @@ class ProfissionalWidget extends StatelessWidget {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (context) => EscolherDia(profissao: profissao, id: id, nome: nome, loc: loc, preco: preco)
+              builder: (context) => EscolherDia(profissao: profissao, id: id, nome: nome, cod: cod, loc: loc, preco: preco)
             )
           );
         },

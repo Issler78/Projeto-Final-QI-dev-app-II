@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
@@ -7,6 +9,7 @@ import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
 import 'package:pulsetime/widgets/inputs/calendario.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
 import 'package:pulsetime/widgets/profissional.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class TipoConsulta extends StatelessWidget {
   const TipoConsulta({super.key});
@@ -406,6 +409,7 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
 class EscolherDia extends StatefulWidget {
   final int id;
   final String nome;
+  final String cod;
   final String loc;
   final String profissao;
   final Decimal preco;
@@ -416,7 +420,8 @@ class EscolherDia extends StatefulWidget {
     required this.id,
     required this.nome,
     required this.loc,
-    required this.preco,
+    required this.preco, 
+    required this.cod,
   });
 
   @override
@@ -580,8 +585,9 @@ class _EscolherDiaState extends State<EscolherDia> {
 
                       // "input" de escolha de data e horario
                       CalendarioEHorariosWidget(
-                        id: widget.id,
+                        profissionalId: widget.id,
                         nome: widget.nome,
+                        cod: widget.cod,
                         loc: widget.loc,
                         preco: widget.preco,
                         profissao: widget.profissao,
@@ -610,15 +616,23 @@ class _EscolherDiaState extends State<EscolherDia> {
 
 
 // tela de resumo e confirmação da consulta
-class ResumoConsulta extends StatelessWidget {
-  final int id;
+
+class ResumoConsultaPage extends StatefulWidget {
+  final int profissionalId;
   final String nome;
   final String profissao;
+  final String cod;
   final String loc;
   final Decimal preco;
   final DateTime dataHorario;
 
-  const ResumoConsulta({super.key,  required this.id, required this.nome, required this.profissao, required this.loc, required this.preco, required this.dataHorario });
+  const ResumoConsultaPage({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.dataHorario, required this.cod});
+
+  @override
+  State<StatefulWidget> createState() => ResumoConsultaState();
+}
+
+class ResumoConsultaState extends State<ResumoConsultaPage> {
 
   // meses
   static List<String> meses = [
@@ -637,6 +651,40 @@ class ResumoConsulta extends StatelessWidget {
   ];
 
   static List<String> diasSemana = ["Segunda", "Terça", "Quarta", "Quinta", "Sexta", "Sábado", "Domingo"];
+
+  Future<void> _salvarConsulta() async {
+    final Map<String, dynamic> novaConsulta = {
+      "nome_profissional": widget.nome,
+      "profissao": widget.profissao,
+      "cod": widget.cod,
+      "loc": widget.loc,
+      "preco": widget.preco.toStringAsFixed(2),
+      "data_e_horario": widget.dataHorario.toString(),
+    };
+
+
+
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    // verificar se ja existe consultas salvas
+    final String? consultas = prefs.getString("minhas_consultas");
+
+    // se nao existe consultas salvas
+    if(consultas == null){
+
+      // transformando a nova consulta em uma string json
+      final jsonString = jsonEncode([novaConsulta]); 
+      prefs.setString("minhas_consultas", jsonString); // salvando
+
+    } else {
+
+      // transforma o json/string encontrada em uma lista
+      final List<dynamic> listaExistente = jsonDecode(consultas);
+      listaExistente.add(novaConsulta); // adicionando nova consulta na lista
+      prefs.setString("minhas_consultas", jsonEncode(listaExistente)); // salvando
+
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -786,7 +834,7 @@ class ResumoConsulta extends StatelessWidget {
                                     SizedBox(height: 10,),
 
                                     Text(
-                                      nome,
+                                      widget.nome,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -796,7 +844,7 @@ class ResumoConsulta extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      profissao,
+                                      widget.profissao,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Color.fromRGBO(11, 180, 255, 1),
@@ -857,7 +905,7 @@ class ResumoConsulta extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      loc,
+                                      widget.loc,
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -921,7 +969,7 @@ class ResumoConsulta extends StatelessWidget {
                                     SizedBox(height: 10,),
 
                                     Text(
-                                      "${dataHorario.day} de ${meses[dataHorario.month]} de ${dataHorario.year}",
+                                      "${widget.dataHorario.day} de ${meses[widget.dataHorario.month]} de ${widget.dataHorario.year}",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -930,7 +978,7 @@ class ResumoConsulta extends StatelessWidget {
                                       ),
                                     ),
                                     Text(
-                                      diasSemana[dataHorario.weekday - 1],
+                                      diasSemana[widget.dataHorario.weekday - 1],
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Color.fromRGBO(94, 94, 94, 1),
@@ -995,7 +1043,7 @@ class ResumoConsulta extends StatelessWidget {
                                     SizedBox(height: 5,),
 
                                     Text(
-                                      "${dataHorario.hour.toString().padLeft(2, "0")}:00",
+                                      "${widget.dataHorario.hour.toString().padLeft(2, "0")}:00",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Colors.black,
@@ -1062,7 +1110,7 @@ class ResumoConsulta extends StatelessWidget {
                                     SizedBox(height: 5,),
 
                                     Text(
-                                      "R\$ ${preco.toStringAsFixed(2)}",
+                                      "R\$ ${widget.preco.toStringAsFixed(2)}",
                                       textAlign: TextAlign.start,
                                       style: TextStyle(
                                         color: Color.fromRGBO(0, 147, 22, 1),
@@ -1181,7 +1229,11 @@ class ResumoConsulta extends StatelessWidget {
                       // botao de confirmar
                       BotaoContinuar(comIcone: false, texto: "Confirmar consulta", funcao: () {
                         
-                        // CHAMAR A CLASSE DO BACK END E SALVAR A CONSULTA AQUI
+                        // funcao para salvar na "memoria"
+                        _salvarConsulta(
+                          
+                        );
+
                         Navigator.pushNamed(context, "/");
 
                       })
