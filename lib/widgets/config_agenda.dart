@@ -226,7 +226,6 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
                     // input
                     SelectInput(
                       icone: "assets/images/clockpng.png", 
-                      placeholder: "08:00", 
                       items: horarios, 
                       value: _horarioInicioSelecionado, 
                       fontSize: 16,
@@ -264,7 +263,6 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
                     // input
                     SelectInput(
                       icone: "assets/images/clockpng.png", 
-                      placeholder: "18:00", 
                       items: _horariosFim ?? [], 
                       value: _horarioFimSelecionado, 
                       fontSize: 16,
@@ -279,29 +277,8 @@ class _ConfigAgendaWidget extends State<ConfigAgenda> {
               )
             ],
           ),
+        
 
-          SizedBox(height: 5,),
-
-          // texto de info
-          Row(
-            children: [
-              Icon(
-                Icons.info_outline,
-                color: Color.fromRGBO(11, 180, 255, 1),
-                size: 18,
-              ),
-              SizedBox(width: 10,),
-              Expanded(
-                child: Text(
-                  "Os horários selecionados serão disponíveis para agendamento.",
-                  style: TextStyle(
-                    color: Color.fromRGBO(94, 94, 94, 1),
-                    fontSize: 12
-                  ),
-                ),
-              )
-            ],
-          ),
         
           SizedBox(height: 30,),
 

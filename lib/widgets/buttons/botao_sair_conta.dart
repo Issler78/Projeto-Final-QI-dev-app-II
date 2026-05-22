@@ -9,6 +9,7 @@ class BotaoSairConta extends StatelessWidget{
     final prefs = await SharedPreferences.getInstance();
     
     prefs.setBool("logado", false);
+    prefs.setBool("logadoPro", false);
   }
 
   @override
