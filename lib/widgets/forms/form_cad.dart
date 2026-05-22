@@ -392,6 +392,57 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
   String ?_valorLocal;
   String ?_erro;
 
+  
+  Future<void> _enviarForm() async {
+    final SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    final String ?profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
+    final String cod = _conselhoController.text.trim();
+    final String ?local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
+    final String precoConsulta = _valorConsultaController.text.trim();
+
+    // verifica se os campos sao vazios ou se a senha é mto curta
+    if (
+        profissao == null ||
+        cod == "" ||
+        local == null ||
+        precoConsulta == ""
+      ) {
+
+      setState(() {
+        _erro = "Campos vazios";
+      });
+      
+      return;
+    }
+
+    // verifica o codigo
+    if (cod.length != 11) {
+      setState(() {
+        _erro = "Insira um código/número de conselho válido";
+      });
+      return;
+    }
+
+    // verificar se o preco é maior que 1
+    final preco = Decimal.parse(precoConsulta.split(" ")[1]);
+    if (preco < Decimal.one) {
+      setState(() {
+        _erro = "O preço mínimo é R\$1.00";
+      });
+      return;
+    }
+
+    // chamar cadastro de profissional!!!
+    prefs.setBool("logadoPro", true);
+    prefs.setBool("temAgenda", false);
+
+    setState(() {
+      _erro = null;
+    });
+  }
+
+
   @override
   void dispose() {
     _conselhoController.dispose();
@@ -496,55 +547,13 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
           
 
           // botao continuar
-          BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () async {
-            final SharedPreferences prefs = await SharedPreferences.getInstance();
-
-            final String ?profissao = _valorProfissao == null || _valorProfissao == "" ? null : _valorProfissao!.trim();
-            final String cod = _conselhoController.text.trim();
-            final String ?local = _valorLocal == null || _valorLocal == "" ? null : _valorLocal!.trim();
-            final String precoConsulta = _valorConsultaController.text.trim();
-
-            // verifica se os campos sao vazios ou se a senha é mto curta
-            if(profissao == null || cod == "" || local == null || precoConsulta == ""){
-              setState(() {
-                _erro = "Campos vazios";
-              });
-              return;
-            }
-
-            // verifica o codigo
-            if(cod.length != 11){
-              setState(() {
-                _erro = "Insira um código/número de conselho válido";
-              });
-              return;
-            }
-
-            // verificar se o preco é maior que 1
-            final preco = Decimal.parse(precoConsulta.split(" ")[1]);
-            if(preco < Decimal.one){
-              setState(() {
-                _erro = "O preço mínimo é R\$1.00";
-              });
-              return;  
-            }
-
-
-
-            // chamar cadastro de profissional!!!
-            prefs.setBool("logadoPro", true);
-            prefs.setBool("temAgenda", false);
-
-
+          BotaoContinuar(comIcone: true, texto: "Cadastrar", funcao: () {
+            
+            _enviarForm();
 
             // mandar para tela inicial, agora logado
-            setState(() {
-              _erro = null;
-            });
-            Navigator.pushNamed(
-              context, 
-              "/",
-            );
+            
+            _erro != null ? Navigator.pushNamed(context, "/") : null;
 
           })
           .animate()
