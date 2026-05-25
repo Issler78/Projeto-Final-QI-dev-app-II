@@ -2,7 +2,7 @@ import 'package:decimal/decimal.dart';
 import 'package:flutter/material.dart';
 import 'package:pulsetime/pages/agendar_consulta.dart';
 
-class ProfissionalWidget extends StatelessWidget {
+class ProfissionalCard1 extends StatelessWidget {
   final String nome;
   final String profissao;
   final String cod;
@@ -11,7 +11,7 @@ class ProfissionalWidget extends StatelessWidget {
   final int id;
   final String imagem;
 
-  const ProfissionalWidget({
+  const ProfissionalCard1({
     super.key,
     required this.id,
     required this.nome,
@@ -183,7 +183,7 @@ class ProfissionalWidget extends StatelessWidget {
   }
 }
 
-class ProfissionalWidget2 extends StatelessWidget {
+class ProfissionalCard2 extends StatelessWidget {
   final int id;
   final String nome;
   final String profissao;
@@ -191,7 +191,7 @@ class ProfissionalWidget2 extends StatelessWidget {
   final Decimal preco;
   final String imagem;
 
-  const ProfissionalWidget2({
+  const ProfissionalCard2({
     super.key,
     required this.id,
     required this.nome,

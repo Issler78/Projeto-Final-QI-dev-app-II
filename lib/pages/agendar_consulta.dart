@@ -326,7 +326,7 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
                       physics: NeverScrollableScrollPhysics(),
                       itemBuilder: (context, index) {
                         // para cada profissional
-                        return ProfissionalWidget(
+                        return ProfissionalCard1(
                           id: profissionais[index]["id"],
                           profissao: widget.profissao,
                           nome: profissionais[index]["nome"],
@@ -456,7 +456,7 @@ class _EscolherDiaState extends State<EscolherDia> {
                       SizedBox(height: 10),
 
                       // card com o profissional escolhido
-                      ProfissionalWidget2(
+                      ProfissionalCard2(
                         id: widget.id,
                         imagem: widget.imagem,
                         nome: widget.nome,
