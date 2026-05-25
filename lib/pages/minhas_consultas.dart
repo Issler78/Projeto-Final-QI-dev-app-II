@@ -69,7 +69,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
     prefs.setString("minhas_consultas", jsonEncode(listaConsultas));
 
     setState(() {
-      consultasBuscadas = List.from(jsonDecode(consultas));
+      consultasBuscadas = List.from(listaConsultas);
     });
   }
 
@@ -177,9 +177,6 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                               horario: horario,
                               funcaoCancelar: () {
                                 _cancelarConsulta(index);
-
-                                // resetar a pagina
-                                Navigator.pushReplacementNamed(context, '/minhas_consultas');
                               },
                             )
                             .animate()
