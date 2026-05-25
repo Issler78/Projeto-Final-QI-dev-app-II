@@ -3,8 +3,9 @@ import 'package:pulsetime/pages/agendar_consulta.dart';
 
 class BotaoTipoConsulta extends StatelessWidget {
   final String tipo;
+  final String imagem;
 
-  const BotaoTipoConsulta({ super.key, required this.tipo });
+  const BotaoTipoConsulta({ super.key, required this.tipo, required this.imagem });
 
   @override
   Widget build(BuildContext context) {
@@ -56,7 +57,7 @@ class BotaoTipoConsulta extends StatelessWidget {
               ),
               child: Image.asset(
                 // talvez mudar no futuro para cada uma
-                "assets/images/nutri.png",
+                "assets/images/$imagem",
                 width: 75,
                 height: 75,
               ),

@@ -12,8 +12,9 @@ class CalendarioEHorariosWidget extends StatefulWidget {
   final String profissao;
   final String loc;
   final Decimal preco;
+  final String imagem;
 
-  const CalendarioEHorariosWidget({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.cod});
+  const CalendarioEHorariosWidget({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.cod, required this.imagem});
 
   @override
   State<StatefulWidget> createState() => _CalendarioState();
@@ -49,11 +50,17 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
   final List<int> diasDisponiveis = [
     4,
     6,
+    10,
+    11,
+    12,
     16,
     20,
+    22,
     23,
     24,
     26,
+    27,
+    28,
   ];
 
   List<String?> horariosDisponiveis = [];
@@ -181,6 +188,7 @@ class _CalendarioState extends State<CalendarioEHorariosWidget> {
                 loc: widget.loc, 
                 preco: widget.preco, 
                 dataHorario: dataHorario,
+                imagem: widget.imagem,
               )
             )
           );

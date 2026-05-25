@@ -8,6 +8,7 @@ class ConsultaCard extends StatelessWidget {
   final String cod;
   final String local;
   final String preco;
+  final String imagem;
   final String data;
   final String diaSemana;
   final String horario;
@@ -23,7 +24,8 @@ class ConsultaCard extends StatelessWidget {
     required this.data,
     required this.horario, 
     required this.diaSemana, 
-    required this.funcaoCancelar,
+    required this.funcaoCancelar, 
+    required this.imagem,
   });
 
   @override
@@ -56,7 +58,7 @@ class ConsultaCard extends StatelessWidget {
                   borderRadius: BorderRadius.circular(10),
                 ),
                 child: Image.asset(
-                  'assets/images/doctor1.jpg',
+                  'assets/images/$imagem',
                   fit: BoxFit.cover,
                   width: 50,
                   height: 50,

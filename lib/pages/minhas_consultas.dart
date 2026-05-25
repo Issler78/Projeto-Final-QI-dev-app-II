@@ -168,6 +168,7 @@ class _MinhasConsultasState extends State<MinhasConsultas> {
                             return ConsultaCard(
                               nome: consultasBuscadas![index]["nome_profissional"],
                               profissao: consultasBuscadas![index]["profissao"],
+                              imagem: consultasBuscadas![index]["imagem"],
                               cod: consultasBuscadas![index]["cod"],
                               local: consultasBuscadas![index]["loc"],
                               preco: "R\$ ${consultasBuscadas![index]["preco"]}",

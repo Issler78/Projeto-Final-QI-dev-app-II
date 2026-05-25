@@ -9,6 +9,7 @@ class ProfissionalWidget extends StatelessWidget {
   final String loc;
   final Decimal preco;
   final int id;
+  final String imagem;
 
   const ProfissionalWidget({
     super.key,
@@ -18,6 +19,7 @@ class ProfissionalWidget extends StatelessWidget {
     required this.loc,
     required this.preco,
     required this.profissao,
+    required this.imagem
   });
 
   @override
@@ -49,7 +51,7 @@ class ProfissionalWidget extends StatelessWidget {
           Navigator.push(
             context, 
             MaterialPageRoute(
-              builder: (context) => EscolherDia(profissao: profissao, id: id, nome: nome, cod: cod, loc: loc, preco: preco)
+              builder: (context) => EscolherDia(profissao: profissao, id: id, nome: nome, cod: cod, loc: loc, preco: preco, imagem: imagem)
             )
           );
         },
@@ -72,7 +74,7 @@ class ProfissionalWidget extends StatelessWidget {
                     borderRadius: BorderRadiusGeometry.circular(10),
                   ),
                   child: Image.asset(
-                    "assets/images/doctor1.jpg",
+                    "assets/images/$imagem",
                     width: 80,
                     height: 80,
                   ),
@@ -187,6 +189,7 @@ class ProfissionalWidget2 extends StatelessWidget {
   final String profissao;
   final String loc;
   final Decimal preco;
+  final String imagem;
 
   const ProfissionalWidget2({
     super.key,
@@ -195,6 +198,7 @@ class ProfissionalWidget2 extends StatelessWidget {
     required this.loc,
     required this.preco,
     required this.profissao,
+    required this.imagem
   });
 
   @override
@@ -241,7 +245,7 @@ class ProfissionalWidget2 extends StatelessWidget {
                     borderRadius: BorderRadiusGeometry.circular(10),
                   ),
                   child: Image.asset(
-                    "assets/images/doctor1.jpg",
+                    "assets/images/$imagem",
                     width: 80,
                     height: 80,
                   ),

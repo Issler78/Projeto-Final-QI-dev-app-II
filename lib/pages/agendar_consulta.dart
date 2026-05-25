@@ -16,6 +16,46 @@ class TipoConsulta extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // especialidades disponiveis
+      List<Map<String, String>> especialidades = [
+        {
+          "profissao": "Nutricionista",
+          "imagem": "nutri.png"
+        },
+        {
+          "profissao": "Pediatra",
+          "imagem": "pediatra.png"
+        },
+        {
+          "profissao": "Clínico Geral",
+          "imagem": "clinicogeral.png"
+        },
+        {
+          "profissao": "Psicólogo",
+          "imagem": "psicologo.png"
+        },
+        {
+          "profissao": "Dentista",
+          "imagem": "dentista.png"
+        },
+        {
+          "profissao": "Dermatologista",
+          "imagem": "dermato.png"
+        },
+        {
+          "profissao": "Oftalmologista",
+          "imagem": "oftalmo.png"
+        },
+        {
+          "profissao": "Fisioterapeuta",
+          "imagem": "fisio.png"
+        },
+        {
+          "profissao": "Ginecologista",
+          "imagem": "gineco.png"
+        },
+      ];
+
     return Scaffold(
       resizeToAvoidBottomInset: true,
       body: SingleChildScrollView(
@@ -103,112 +143,27 @@ class TipoConsulta extends StatelessWidget {
 
                       SizedBox(height: 30),
 
-                      // FAZER UMA LIST VIEW NO FUTURO PARA CADA PROFISSAO PRESENTE RECEBIDA DO BACK END
-                      BotaoTipoConsulta(tipo: "Nutricionista")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
 
-                      SizedBox(height: 10),
+                      // list view com cada especialidade disponivel
+                      ListView.builder(
+                        itemCount: especialidades.length,
+                        shrinkWrap: true,
+                        itemBuilder: (context, index) {
+                          final especialidade = especialidades[index];
 
-                      BotaoTipoConsulta(tipo: "Pediatra")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Clínico Geral")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Psicólogo")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Dentista")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Dermatologista")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Oftalmologista")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Fisioterapeuta")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
-
-                      SizedBox(height: 10),
-
-                      BotaoTipoConsulta(tipo: "Ginecologista")
-                          .animate()
-                          .slideY(
-                            duration: Duration(milliseconds: 900),
-                            begin: -0.5,
-                            curve: Curves.easeOut,
-                            delay: Duration(milliseconds: 1000),
-                          )
-                          .fadeIn(duration: Duration(milliseconds: 1500)),
+                          return Container(
+                            margin: EdgeInsets.only(bottom: 10),
+                            child: BotaoTipoConsulta(tipo: especialidade["profissao"]!, imagem: especialidade["imagem"]!,),
+                          ).animate()
+                            .slideY(
+                              duration: Duration(milliseconds: 900),
+                              begin: -0.5,
+                              curve: Curves.easeOut,
+                              delay: Duration(milliseconds: 1000 + ((index + 1) * 15)),
+                            )
+                            .fadeIn(duration: Duration(milliseconds: 1500));
+                        }
+                      ),
 
                       SizedBox(height: 30),
                     ],
@@ -247,37 +202,34 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
       {
         "id": 1,
         "nome": "Marcos Lima",
-        "cod": "0123456789/2024",
-        "loc": "Clínica 1",
+        "cod": "13323/2024",
+        "loc": "Amor Saúde",
         "preco": Decimal.parse("150.00"),
+        "imagem": "doctor1.jpg"
       },
       {
         "id": 2,
-        "nome": "Marcos Lima",
-        "cod": "0123456789/2024",
-        "loc": "Clínica 1",
-        "preco": Decimal.parse("150.00"),
+        "nome": "Fernando Santos",
+        "cod": "33234/2018",
+        "loc": "Sáude Para Todos",
+        "preco": Decimal.parse("120.00"),
+        "imagem": "doctor2.jpg"
       },
       {
         "id": 3,
-        "nome": "Marcos Lima",
-        "cod": "0123456789/2024",
-        "loc": "Clínica 1",
-        "preco": Decimal.parse("150.00"),
+        "nome": "Amanda Ribeiro",
+        "cod": "52353/2019",
+        "loc": "Bem Viver",
+        "preco": Decimal.parse("180.00"),
+        "imagem": "doctor3.jpg"
       },
       {
         "id": 4,
-        "nome": "Marcos Lima",
-        "cod": "0123456789/2024",
-        "loc": "Clínica 1",
-        "preco": Decimal.parse("150.00"),
-      },
-      {
-        "id": 5,
-        "nome": "Marcos Lima",
-        "cod": "0123456789/2024",
-        "loc": "Clínica 1",
-        "preco": Decimal.parse("150.00"),
+        "nome": "Sofia Oliveira",
+        "cod": "44345/2025",
+        "loc": "SoluMedi",
+        "preco": Decimal.parse("130.00"),
+        "imagem": "doctor4.jpg"
       },
     ];
 
@@ -375,12 +327,13 @@ class _EscolherProfissionalState extends State<EscolherProfissional> {
                       itemBuilder: (context, index) {
                         // para cada profissional
                         return ProfissionalWidget(
-                          id: profissionais[index]['id'],
+                          id: profissionais[index]["id"],
                           profissao: widget.profissao,
-                          nome: profissionais[index]['nome'],
-                          cod: profissionais[index]['cod'],
-                          loc: profissionais[index]['loc'],
-                          preco: profissionais[index]['preco'],
+                          nome: profissionais[index]["nome"],
+                          cod: profissionais[index]["cod"],
+                          loc: profissionais[index]["loc"],
+                          preco: profissionais[index]["preco"],
+                          imagem: profissionais[index]["imagem"],
                         )
                         .animate()
                         .slideY(
@@ -413,10 +366,12 @@ class EscolherDia extends StatefulWidget {
   final String loc;
   final String profissao;
   final Decimal preco;
+  final String imagem;
 
   const EscolherDia({
     super.key,
     required this.profissao,
+    required this.imagem,
     required this.id,
     required this.nome,
     required this.loc,
@@ -503,6 +458,7 @@ class _EscolherDiaState extends State<EscolherDia> {
                       // card com o profissional escolhido
                       ProfissionalWidget2(
                         id: widget.id,
+                        imagem: widget.imagem,
                         nome: widget.nome,
                         loc: widget.loc,
                         preco: widget.preco,
@@ -591,6 +547,7 @@ class _EscolherDiaState extends State<EscolherDia> {
                         loc: widget.loc,
                         preco: widget.preco,
                         profissao: widget.profissao,
+                        imagem: widget.imagem,
                       ).animate()
                       .slideY(
                         duration: Duration(milliseconds: 1100),
@@ -625,8 +582,9 @@ class ResumoConsultaPage extends StatefulWidget {
   final String loc;
   final Decimal preco;
   final DateTime dataHorario;
+  final String imagem;
 
-  const ResumoConsultaPage({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.dataHorario, required this.cod});
+  const ResumoConsultaPage({super.key, required this.profissionalId, required this.nome, required this.profissao, required this.loc, required this.preco, required this.dataHorario, required this.cod, required this.imagem});
 
   @override
   State<StatefulWidget> createState() => ResumoConsultaState();
@@ -660,6 +618,7 @@ class ResumoConsultaState extends State<ResumoConsultaPage> {
       "loc": widget.loc,
       "preco": widget.preco.toStringAsFixed(2),
       "data_e_horario": widget.dataHorario.toString(),
+      "imagem": widget.imagem
     };
 
 
@@ -811,7 +770,7 @@ class ResumoConsultaState extends State<ResumoConsultaPage> {
                                     borderRadius: BorderRadiusGeometry.circular(10),
                                   ),
                                   child: Image.asset(
-                                    "assets/images/doctor1.jpg",
+                                    "assets/images/${widget.imagem}",
                                     width: 65,
                                     height: 65,
                                   ),
