@@ -35,18 +35,34 @@ class _AgendaState extends State<AgendaWidget> {
 
   // dias que o profissional possui horários disponíveis
   // RETORNAR DO BACK-END COM O ID DO PROFISSIONAL E O MÊS
-  final List<int> diasDisponiveis = [4, 6, 16, 20, 23, 24, 26];
+  final List<int> diasDisponiveis = [
+    4,
+    6,
+    10,
+    11,
+    12,
+    16,
+    20,
+    22,
+    23,
+    24,
+    26,
+    27,
+    28,
+  ];
 
   // dias que possuem consulta marcada
   // RETORNAR DO BACK-END CONFORME O MÊS SELECIONADO
-  final List<int> diasComConsultas = [4, 16, 24];
+  final List<int> diasComConsultas = [4, 6, 16, 24, 26, 28];
 
   // pacientes do dia selecionado
   // RETORNAR DO BACK-END CONFORME O DIA SELECIONADO (nome, id e horário de cada paciente)
   final List<Map<String, dynamic>> pacientes = [
     {"id": 1, "nome": "Júlio César", "horario": "09:00"},
-    {"id": 2, "nome": "Amanda Oliveira", "horario": "14:00"},
-    {"id": 3, "nome": "Alice Neves", "horario": "17:00"},
+    {"id": 2, "nome": "Felipe Alves", "horario": "11:00"},
+    {"id": 3, "nome": "Alice Neves", "horario": "14:00"},
+    {"id": 4, "nome": "Gustavo Brunning", "horario": "17:00"},
+    {"id": 5, "nome": "Pedro Silva", "horario": "18:00"},
   ];
 
   @override
@@ -118,7 +134,7 @@ class _AgendaState extends State<AgendaWidget> {
             ],
           ),
 
-
+          SizedBox(height: 20,),
 
           // linhas de pacientes do dia selecionado
           if (pacientes.isEmpty)
@@ -149,8 +165,9 @@ class _AgendaState extends State<AgendaWidget> {
                   nome: pacientes[index]["nome"],
                   horario: pacientes[index]["horario"],
                   onExcluir: () {
-                    // LOGICA PARA EXCLUIR UMA CONSULTA AQUI!!!
-                    // VERIFICAR SE O PROFISSIONAL DA CONSULTA É O DONO DA AGENDA, PARA SER POSSIVEL EXCLUIR
+                    setState(() {
+                      pacientes.removeAt(index);
+                    });
                   },
                 )
                 .animate()

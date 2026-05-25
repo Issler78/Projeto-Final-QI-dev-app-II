@@ -6,7 +6,7 @@ import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/buttons/botao_continuar.dart';
 import 'package:pulsetime/widgets/buttons/botao_tipo_consulta.dart';
 import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
-import 'package:pulsetime/widgets/inputs/calendario.dart';
+import 'package:pulsetime/widgets/calendario.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
 import 'package:pulsetime/widgets/profissional.dart';
 import 'package:shared_preferences/shared_preferences.dart';

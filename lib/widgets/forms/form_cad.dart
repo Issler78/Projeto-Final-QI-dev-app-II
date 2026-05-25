@@ -538,7 +538,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
             }
 
             // verifica o codigo
-            if (cod.length != 11) {
+            if (cod.length != 10) {
               setState(() {
                 _erro = "Insira um código/número de conselho válido";
               });
@@ -588,7 +588,7 @@ class _FormCadProfissionalState extends State<FormCadProfissional>{
   MaskTextInputFormatter _maskCod(){
     // mascara para o campo de codigo/numero do conselho
     return MaskTextInputFormatter(
-      mask: '######/####', 
+      mask: '#####/####', 
       filter: { "#": RegExp(r'[0-9]') },
       type: MaskAutoCompletionType.lazy,
     );

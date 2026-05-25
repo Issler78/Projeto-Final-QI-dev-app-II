@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:pulsetime/widgets/buttons/botao_voltar.dart';
 import 'package:pulsetime/widgets/config_agenda.dart';
-import 'package:pulsetime/widgets/inputs/agenda.dart';
+import 'package:pulsetime/widgets/agenda.dart';
 import 'package:pulsetime/widgets/pagina_topo.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
