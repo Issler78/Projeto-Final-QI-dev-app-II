@@ -134,7 +134,7 @@ class _AgendaState extends State<AgendaWidget> {
             ],
           ),
 
-          SizedBox(height: 20,),
+          SizedBox(height: 10,),
 
           // linhas de pacientes do dia selecionado
           if (pacientes.isEmpty)
